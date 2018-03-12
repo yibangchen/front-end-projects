@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-// import Radium from 'radium';
+import Radium from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -45,16 +45,15 @@ class App extends Component {
   render() {
 
   	const style = {
-  		backgroundColor: 'white',
+  		backgroundColor: 'green',
   		font: 'inherit',
   		border: '1px solid blue',
   		padidng: '8px',
-  		cursor: 'pointer'
-      // ,
-      // ':hover': {
-      //   backgroundColor: 'lightgreen',
-      //   color: 'black'
-      // }
+  		cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
   	};
 
   	let persons = null;
@@ -74,10 +73,10 @@ class App extends Component {
   		);
 
       style.backgroundColor = 'red';
-      // style[':hover'] = {
-      //   backgroundColor: 'lightred',
-      //   color: 'black'
-      // }
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
 
   	}
 
@@ -104,5 +103,5 @@ class App extends Component {
   }
 }
 
-// export default Radium(App);
-export default App;
+export default Radium(App);
+// export default App;

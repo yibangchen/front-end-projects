@@ -4,6 +4,8 @@ import Person from '../components/Persons/Person/Person';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Aux from '../components/hoc/Aux'
+import withClass from '../components/hoc/withClass';
 
 class App extends Component {
 
@@ -14,12 +16,19 @@ class App extends Component {
       { id:'bea', name: 'David', age: 12}
   	],
   	otherState: '',
-  	showPersons: false
+  	showPersons: false,
+    toggleClicked: 0
   }
 
   togglePersonsHandler = () => {
   	const doesShow = this.state.showPersons;
-  	this.setState({ showPersons: !doesShow });
+
+    this.setState( (prevState,props) => {
+      return {
+        showPersons: !doesShow,
+        toggleClicked: prevState.toggleClicked + 1
+      }
+    });
   }
 
   deletePersonHandler = (personIndex) => {
@@ -57,16 +66,16 @@ class App extends Component {
     // let classes = ['red', 'bold'].join(' ');
 
     return (
-      <div className={ classes.App }>
+      <Aux>
         <Cockpit 
           showPersons={ this.state.showPersons }
           persons={ this.state.persons }
           clicked={ this.togglePersonsHandler }
         />
         { persons }      			
-      </div>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);

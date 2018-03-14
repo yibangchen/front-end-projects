@@ -1,5 +1,7 @@
 import React from 'react';
 import classes from './Cockpit.css';
+// import Aux from '../hoc/Aux'
+// import withClass from '../hoc/withClass';
 
 const cockpit = (props) => {
 
@@ -17,7 +19,7 @@ const cockpit = (props) => {
 
 
 	return (
-	  <div className={ classes.Cockpit }>
+	  <div className={classes.Cockpit}>
 	    <h1>Hello I'm Yibang</h1>
 	    <p className={assignedClasses.join(' ')}> This is working </p>
 	    <button
@@ -27,4 +29,5 @@ const cockpit = (props) => {
 	);
 };
 
-export default cockpit
+// export default withClass(cockpit, classes.Cockpit);
+export default cockpit;

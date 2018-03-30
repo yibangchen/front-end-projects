@@ -17,11 +17,14 @@ class FullPost extends Component {
             });
     }
 
-    componentDidUpdate () {
-        if (this.props.id){
+    componentDidMount () {
+
+        console.log(this.props);
+
+        if (this.props.match.params.id){
             //mind infinite loop: setState would trigger componentDidUpdate() too
             if (! this.state.loadedPost || this.state.loadedPost.id !== this.props.id) {
-                axios.get(`/posts/${this.props.id}`)
+                axios.get(`/posts/${this.props.match.params.id}`)
                     .then(res => {
                         console.log(res.data);
                         this.setState({loadedPost: res.data});

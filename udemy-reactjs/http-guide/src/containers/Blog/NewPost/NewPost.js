@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import { Redirect } from 'react-router-dom';
 import './NewPost.css';
 
 class NewPost extends Component {
@@ -19,6 +19,9 @@ class NewPost extends Component {
         axios.post('/posts', data)
             .then( res=> {
                 console.log(res);
+                this.props.history.push('/posts'); //user can go back!
+                // this.props.history.push('/posts');
+                // this.setState( { submitted: true});
             });
     }
 

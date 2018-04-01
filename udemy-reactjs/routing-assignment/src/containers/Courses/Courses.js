@@ -13,11 +13,6 @@ class Courses extends Component {
         ]
     }
 
-    clickHandler(id) {
-        console.log("clicked");
-        this.props.history.push({ pathname: this.props.match.url + '/' + id});
-    }
-
     render () {
         return (
             <div>
@@ -26,23 +21,23 @@ class Courses extends Component {
                     {
                         this.state.courses.map( course => {
                         return (
-                            <div>
-                                <article 
-                                    className="Course" 
-                                    key={course.id}
-                                    onClick={ ()=> this.clickHandler(course.id) }
-                                >
+                            <Link key={course.id}
+                                to={{
+                                    pathname: this.props.match.url + '/' + course.id,
+                                    search: '?title=' + course.title
+                                }}>
+                                <article className="Course">
                                     {course.title}
                                 </article>
-                                <Route path={this.props.match.url + "/:id"} exact component={Course} />
-                            </div>
+                            </Link>
                         );
                         } )
                     }
                 </section>
+                <Route  path={this.props.match.url + "/:id"} component={ Course } />
             </div>
         );
     }
 }
-
+//render={ () => <Course courseTitle={course.title} id={course.id}/>}
 export default Courses;

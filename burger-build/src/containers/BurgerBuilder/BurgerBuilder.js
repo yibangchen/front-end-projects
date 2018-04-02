@@ -28,7 +28,8 @@ class BurgerBuilder extends Component {
         totalPrice: 4,
         purchasable: false,
         purchasing: false,
-        loading: false
+        loading: false,
+        error: false
     }
 
     componentDidMount () {
@@ -36,6 +37,9 @@ class BurgerBuilder extends Component {
             .then(res => {
                 this.setState({ingredients: res.data})
             })
+            .catch(err => {
+                this.setState({error: true})
+            });
     }
 
     updatePurchaseState (ingredients) {
@@ -89,39 +93,30 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Yibang Chen',
-                address: {
-                    street: '100 Market St',
-                    zipCode: '94112'
-                }
-            },
-            deliveryMethod: '1st Day Air'
+
+        const queryParams = [];
+        for (let i in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(i)+ '=' + encodeURIComponent(this.state.ingredients[i]))
         }
-        axios.post('/orders.json', order)
-            .then(res=>{
-                this.setState({ loading: false, purchasing: false});
-            })
-            .catch(err=>{
-                this.setState({ loading: false, purchasing: false});
-            })
+        queryParams.push('price='+this.state.totalPrice);
+        const queryString = queryParams.join('&');
+
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     }
 
     render () {
         const disabledInfo = {
             ...this.state.ingredients
         };
-        for ( let key in disabledInfo ) {
+        for ( let key in disabledInfo ) { 
             disabledInfo[key] = disabledInfo[key] <= 0
         }
         // {salad: true, meat: false, ...}
         let orderSummary = null;
-
-        let burger = <Spinner />
+        let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />
 
         if (this.state.ingredients) {
             orderSummary = <OrderSummary 

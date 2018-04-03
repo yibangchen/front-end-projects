@@ -39,18 +39,24 @@ const input = (props) => {
 					))}
 				</select>);
 			break;
-		defult:
-		inputElement = <input 
-			{...props.elementConfig} 
-			onChange={props.changed}
-			value={props.value}
-			className={inputClasses.join(' ')}/>
+		default:
+			inputElement = <input 
+				{...props.elementConfig}
+				onChange={props.changed} 
+				value={props.value}
+				className={inputClasses.join(' ')}/>
+		}
+
+	let validationError = null;
+	if (props.invalid && props.touched) {
+		validationError = <p>Please enter a valid value!</p>
 	}
 
 	return	(
 		<div className={classes.Input}>
 			<label className={classes.Label}>{props.label}</label>
 			{ inputElement }
+			{ validationError }
 		</div>);
 }
 

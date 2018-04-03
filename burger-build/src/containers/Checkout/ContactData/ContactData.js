@@ -84,11 +84,13 @@ class ContactData extends Component {
             			{value: 'cheapest', displayValue: 'Cheapest'}
             		]
             	},
-            	value: '',
+            	value: 'fastest',
+            	validation: {},
             	valid: true,
             	touched: false
             }
 		},
+		formIsValid: false,
 		loading: false
 	}
 
@@ -138,8 +140,12 @@ class ContactData extends Component {
 		updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
 		updatedOrderForm[inputIdentifier] = updatedFormElement;
 		updatedFormElement.touched = true;
-		console.log(updatedFormElement);
-		this.setState({orderForm: updatedOrderForm});
+
+		let formIsValid = true;
+		for (let inputIdentifier in updatedOrderForm) {
+			formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+		}
+		this.setState({ formIsValid: formIsValid, orderForm: updatedOrderForm });
 	}
 
 	render() {
@@ -154,7 +160,6 @@ class ContactData extends Component {
 
 		let form= (
 			<form onSubmit={this.orderHandler}>
-				<Input elementType="..." elementConfig="..." value="..."/>
 				{formElementsArray.map(formEl => (
 					<Input 
 						key={formEl.id}
@@ -166,11 +171,7 @@ class ContactData extends Component {
 						touched={formEl.config.touched}
 						changed={(event) => this.inputChangeHandler(event, formEl.id)} />
 				))}
-
-				<Input inputtype="input" type="email" name="email" placeholder="Your email"/>
-				<Input inputtype="input" type="text" name="street" placeholder="Your street"/>
-				<Input inputtype="input" type="text" name="postal" placeholder="Your postal"/>
-				<Button btnType="Success">ORDER</Button>
+				<Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
 			</form>);
 		if (this.state.loading) {
 			form = <Spinner />

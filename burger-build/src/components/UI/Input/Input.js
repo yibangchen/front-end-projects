@@ -29,7 +29,7 @@ const input = (props) => {
 			inputElement = (
 				<select
 					{...props.elementConfig}
-					onChange={props.changecd}
+					onChange={props.changed}
 					value={props.value}
 					className={inputClasses.join(' ')}>
 					{props.elementConfig.options.map(option => (

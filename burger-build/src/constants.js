@@ -5,6 +5,8 @@ export const INGREDIENT_PRICES = {
     bacon: 0.7
 };
 
+export const INIT_PRICE = 4;
+
 export const CONTROLS = [
     { label: 'Salad', type: 'salad' },
     { label: 'Bacon', type: 'bacon' },
